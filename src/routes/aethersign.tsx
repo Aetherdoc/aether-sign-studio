@@ -242,7 +242,7 @@ function AetherSignPage() {
               >
                 {/* Header rule */}
                 <div
-                  data-pdf-section
+                  data-pdf-section=""
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -288,7 +288,7 @@ function AetherSignPage() {
                 </div>
 
                 {/* Title */}
-                <div data-pdf-section style={{ marginTop: "22mm" }}>
+                <div data-pdf-section="" style={{ marginTop: "22mm" }}>
                   <h1
                     style={{
                       fontFamily: '"Playfair Display", serif',
@@ -305,7 +305,7 @@ function AetherSignPage() {
                 </div>
 
                 {/* Client */}
-                <div data-pdf-section style={{ marginTop: "8mm" }}>
+                <div data-pdf-section="" style={{ marginTop: "8mm" }}>
                   <p
                     style={{
                       fontFamily: "Inter, sans-serif",
@@ -333,7 +333,7 @@ function AetherSignPage() {
 
                 {/* Divider */}
                 <div
-                  data-pdf-section
+                  data-pdf-section=""
                   style={{
                     width: "20mm",
                     height: "1px",
@@ -352,7 +352,7 @@ function AetherSignPage() {
                   ).map((para, i) => (
                     <p
                       key={i}
-                      data-pdf-section
+                      data-pdf-section=""
                       style={{
                         fontFamily: '"Playfair Display", serif',
                         fontSize: "12pt",
