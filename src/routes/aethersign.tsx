@@ -180,6 +180,39 @@ function AetherSignPage() {
             </button>
           </div>
 
+          {/* Template picker */}
+          <div className="mb-8">
+            <p className="mb-3 text-xs uppercase tracking-[0.25em] text-white/50">Template</p>
+            <div className="grid grid-cols-5 gap-2">
+              {TEMPLATES.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTemplate(t.id)}
+                  className={`group relative flex flex-col items-center gap-1.5 rounded-lg border p-3 text-center transition ${
+                    template === t.id
+                      ? "border-[var(--gold)]/60 bg-[var(--gold)]/10"
+                      : "border-white/8 bg-white/3 hover:border-white/20"
+                  }`}
+                >
+                  <div className="flex gap-0.5">
+                    <span
+                      className="block h-3 w-3 rounded-full"
+                      style={{ background: t.swatch.bg, border: "1px solid rgba(255,255,255,0.15)" }}
+                    />
+                    <span
+                      className="block h-3 w-3 rounded-full"
+                      style={{ background: t.swatch.accent }}
+                    />
+                  </div>
+                  <span className="text-[10px] leading-tight text-white/70">{t.name}</span>
+                  {template === t.id && (
+                    <Check className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-[var(--gold)] p-0.5 text-black" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="space-y-7">
             <Field label="Title">
               <input
