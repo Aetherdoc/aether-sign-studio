@@ -50,18 +50,58 @@ function AetherSignPage() {
     if (!previewRef.current) return;
     setDownloading(true);
     try {
-      const html2pdf = (await import("html2pdf.js")).default;
+      const [{ jsPDF }, html2canvasMod] = await Promise.all([
+        import("jspdf"),
+        import("html2canvas"),
+      ]);
+      const html2canvas = html2canvasMod.default;
+
+      const A4_W = 210;
+      const A4_H = 297;
+      const MARGIN_X = 24;
+      const MARGIN_Y = 28;
+      const CONTENT_W = A4_W - MARGIN_X * 2;
+      const SECTION_GAP = 3;
+
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      let y = MARGIN_Y;
+
+      const sections = Array.from(
+        previewRef.current.querySelectorAll<HTMLElement>("[data-pdf-section]"),
+      );
+
+      for (const section of sections) {
+        const canvas = await html2canvas(section, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#fafaf7",
+        });
+        const heightMM = (canvas.height / canvas.width) * CONTENT_W;
+        const remaining = A4_H - MARGIN_Y - y;
+
+        if (heightMM > remaining && y > MARGIN_Y) {
+          pdf.addPage();
+          y = MARGIN_Y;
+        }
+
+        const imgData = canvas.toDataURL("image/jpeg", 0.98);
+        pdf.addImage(imgData, "JPEG", MARGIN_X, y, CONTENT_W, heightMM);
+        y += heightMM + SECTION_GAP;
+      }
+
+      // Footer on every page
+      const pageCount = pdf.getNumberOfPages();
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(7);
+      pdf.setTextColor(150);
+      for (let i = 1; i <= pageCount; i++) {
+        pdf.setPage(i);
+        pdf.text("CONFIDENTIAL · AETHER DOC", MARGIN_X, A4_H - 12);
+        pdf.text(`PAGE ${i} OF ${pageCount}`, A4_W - MARGIN_X, A4_H - 12, { align: "right" });
+      }
+
       const filename = `AetherSign-${(title || "Untitled").replace(/[^\w\s-]/g, "").trim() || "Untitled"}.pdf`;
-      await html2pdf()
-        .set({
-          margin: 0,
-          filename,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2, backgroundColor: "#fafaf7", useCORS: true },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        })
-        .from(previewRef.current)
-        .save();
+      pdf.save(filename);
       toast.success("Document downloaded", { description: filename });
     } catch (err) {
       console.error(err);
@@ -185,15 +225,13 @@ function AetherSignPage() {
 
           <div className="flex justify-center">
             <div
-              className="w-full max-w-[800px] overflow-hidden rounded-sm shadow-2xl"
+              className="w-full max-w-[800px] overflow-hidden rounded-sm"
               style={{ boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6)" }}
             >
               <div
                 ref={previewRef}
-                className="font-serif"
                 style={{
                   width: "210mm",
-                  minHeight: "297mm",
                   maxWidth: "100%",
                   background: "#fafaf7",
                   color: "#1a1a1a",
@@ -204,6 +242,7 @@ function AetherSignPage() {
               >
                 {/* Header rule */}
                 <div
+                  data-pdf-section
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -249,89 +288,84 @@ function AetherSignPage() {
                 </div>
 
                 {/* Title */}
-                <h1
-                  style={{
-                    fontFamily: '"Playfair Display", serif',
-                    fontSize: "42px",
-                    fontWeight: 600,
-                    lineHeight: 1.1,
-                    letterSpacing: "-0.01em",
-                    color: "#1a1a1a",
-                    marginTop: "22mm",
-                    marginBottom: "8mm",
-                  }}
-                >
-                  {title || "Untitled Document"}
-                </h1>
+                <div data-pdf-section style={{ marginTop: "22mm" }}>
+                  <h1
+                    style={{
+                      fontFamily: '"Playfair Display", serif',
+                      fontSize: "42px",
+                      fontWeight: 600,
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.01em",
+                      color: "#1a1a1a",
+                      margin: 0,
+                    }}
+                  >
+                    {title || "Untitled Document"}
+                  </h1>
+                </div>
 
                 {/* Client */}
-                <p
-                  style={{
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "11px",
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    color: "#8a7a5a",
-                    marginBottom: "2mm",
-                  }}
-                >
-                  Prepared for
-                </p>
-                <p
-                  style={{
-                    fontFamily: '"Playfair Display", serif',
-                    fontSize: "18px",
-                    fontStyle: "italic",
-                    color: "#333",
-                    marginBottom: "12mm",
-                  }}
-                >
-                  {client || "—"}
-                </p>
+                <div data-pdf-section style={{ marginTop: "8mm" }}>
+                  <p
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "11px",
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                      color: "#8a7a5a",
+                      margin: "0 0 2mm 0",
+                    }}
+                  >
+                    Prepared for
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: '"Playfair Display", serif',
+                      fontSize: "18px",
+                      fontStyle: "italic",
+                      color: "#333",
+                      margin: 0,
+                    }}
+                  >
+                    {client || "—"}
+                  </p>
+                </div>
 
                 {/* Divider */}
                 <div
+                  data-pdf-section
                   style={{
                     width: "20mm",
                     height: "1px",
                     background: "#d4b67a",
-                    marginBottom: "10mm",
+                    marginTop: "12mm",
                   }}
                 />
 
-                {/* Body */}
-                <div
-                  style={{
-                    fontFamily: '"Playfair Display", serif',
-                    fontSize: "12pt",
-                    lineHeight: 1.75,
-                    color: "#222",
-                    textAlign: "justify",
-                    whiteSpace: "pre-wrap",
-                    minHeight: "120mm",
-                  }}
-                >
-                  {body ||
-                    "Your composition will appear here. Begin typing on the left to see your document take shape."}
-                </div>
-
-                {/* Footer */}
-                <div
-                  style={{
-                    marginTop: "20mm",
-                    paddingTop: "6mm",
-                    borderTop: "1px solid #e5e0d4",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontFamily: "Inter, sans-serif",
-                    fontSize: "8px",
-                    letterSpacing: "0.25em",
-                    color: "#999",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  <span>Confidential · Aether Doc</span>
-                  <span>Page 1</span>
+                {/* Body — paragraph-per-section so pagination is clean */}
+                <div style={{ marginTop: "10mm" }}>
+                  {(body
+                    ? body.split(/\n\s*\n/)
+                    : [
+                        "Your composition will appear here. Begin typing on the left to see your document take shape.",
+                      ]
+                  ).map((para, i) => (
+                    <p
+                      key={i}
+                      data-pdf-section
+                      style={{
+                        fontFamily: '"Playfair Display", serif',
+                        fontSize: "12pt",
+                        lineHeight: 1.75,
+                        color: "#222",
+                        textAlign: "justify",
+                        whiteSpace: "pre-wrap",
+                        margin: "0 0 5mm 0",
+                      }}
+                    >
+                      {para}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>
