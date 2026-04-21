@@ -242,6 +242,7 @@ function AetherSignPage() {
               >
                 {/* Header rule */}
                 <div
+                  data-pdf-section
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
