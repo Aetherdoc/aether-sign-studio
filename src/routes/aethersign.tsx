@@ -50,18 +50,58 @@ function AetherSignPage() {
     if (!previewRef.current) return;
     setDownloading(true);
     try {
-      const html2pdf = (await import("html2pdf.js")).default;
+      const [{ jsPDF }, html2canvasMod] = await Promise.all([
+        import("jspdf"),
+        import("html2canvas"),
+      ]);
+      const html2canvas = html2canvasMod.default;
+
+      const A4_W = 210;
+      const A4_H = 297;
+      const MARGIN_X = 24;
+      const MARGIN_Y = 28;
+      const CONTENT_W = A4_W - MARGIN_X * 2;
+      const SECTION_GAP = 3;
+
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      let y = MARGIN_Y;
+
+      const sections = Array.from(
+        previewRef.current.querySelectorAll<HTMLElement>("[data-pdf-section]"),
+      );
+
+      for (const section of sections) {
+        const canvas = await html2canvas(section, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#fafaf7",
+        });
+        const heightMM = (canvas.height / canvas.width) * CONTENT_W;
+        const remaining = A4_H - MARGIN_Y - y;
+
+        if (heightMM > remaining && y > MARGIN_Y) {
+          pdf.addPage();
+          y = MARGIN_Y;
+        }
+
+        const imgData = canvas.toDataURL("image/jpeg", 0.98);
+        pdf.addImage(imgData, "JPEG", MARGIN_X, y, CONTENT_W, heightMM);
+        y += heightMM + SECTION_GAP;
+      }
+
+      // Footer on every page
+      const pageCount = pdf.getNumberOfPages();
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(7);
+      pdf.setTextColor(150);
+      for (let i = 1; i <= pageCount; i++) {
+        pdf.setPage(i);
+        pdf.text("CONFIDENTIAL · AETHER DOC", MARGIN_X, A4_H - 12);
+        pdf.text(`PAGE ${i} OF ${pageCount}`, A4_W - MARGIN_X, A4_H - 12, { align: "right" });
+      }
+
       const filename = `AetherSign-${(title || "Untitled").replace(/[^\w\s-]/g, "").trim() || "Untitled"}.pdf`;
-      await html2pdf()
-        .set({
-          margin: 0,
-          filename,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2, backgroundColor: "#fafaf7", useCORS: true },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        })
-        .from(previewRef.current)
-        .save();
+      pdf.save(filename);
       toast.success("Document downloaded", { description: filename });
     } catch (err) {
       console.error(err);
