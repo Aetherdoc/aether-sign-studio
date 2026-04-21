@@ -52,7 +52,7 @@ function AetherSignPage() {
     try {
       const [{ jsPDF }, html2canvasMod] = await Promise.all([
         import("jspdf"),
-        import("html2canvas"),
+        import("html2canvas-pro"),
       ]);
       const html2canvas = html2canvasMod.default;
 
