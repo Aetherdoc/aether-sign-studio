@@ -1,8 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { ArrowLeft, Download, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Download, RotateCcw, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  TEMPLATES,
+  getTemplateBackground,
+  renderTemplate,
+  type TemplateId,
+} from "@/lib/aether-templates";
 
 export const Route = createFileRoute("/aethersign")({
   head: () => ({
@@ -34,6 +40,7 @@ We are grateful for the opportunity to work alongside your team and look forward
 };
 
 function AetherSignPage() {
+  const [template, setTemplate] = useState<TemplateId>("executive");
   const [title, setTitle] = useState("");
   const [client, setClient] = useState("");
   const [body, setBody] = useState("");
