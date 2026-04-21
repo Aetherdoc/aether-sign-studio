@@ -288,20 +288,93 @@ function AetherSignPage() {
                 </div>
 
                 {/* Title */}
-                <h1
+                <div data-pdf-section style={{ marginTop: "22mm" }}>
+                  <h1
+                    style={{
+                      fontFamily: '"Playfair Display", serif',
+                      fontSize: "42px",
+                      fontWeight: 600,
+                      lineHeight: 1.1,
+                      letterSpacing: "-0.01em",
+                      color: "#1a1a1a",
+                      margin: 0,
+                    }}
+                  >
+                    {title || "Untitled Document"}
+                  </h1>
+                </div>
+
+                {/* Client */}
+                <div data-pdf-section style={{ marginTop: "8mm" }}>
+                  <p
+                    style={{
+                      fontFamily: "Inter, sans-serif",
+                      fontSize: "11px",
+                      letterSpacing: "0.15em",
+                      textTransform: "uppercase",
+                      color: "#8a7a5a",
+                      margin: "0 0 2mm 0",
+                    }}
+                  >
+                    Prepared for
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: '"Playfair Display", serif',
+                      fontSize: "18px",
+                      fontStyle: "italic",
+                      color: "#333",
+                      margin: 0,
+                    }}
+                  >
+                    {client || "—"}
+                  </p>
+                </div>
+
+                {/* Divider */}
+                <div
+                  data-pdf-section
                   style={{
-                    fontFamily: '"Playfair Display", serif',
-                    fontSize: "42px",
-                    fontWeight: 600,
-                    lineHeight: 1.1,
-                    letterSpacing: "-0.01em",
-                    color: "#1a1a1a",
-                    marginTop: "22mm",
-                    marginBottom: "8mm",
+                    width: "20mm",
+                    height: "1px",
+                    background: "#d4b67a",
+                    marginTop: "12mm",
                   }}
-                >
-                  {title || "Untitled Document"}
-                </h1>
+                />
+
+                {/* Body — paragraph-per-section so pagination is clean */}
+                <div style={{ marginTop: "10mm" }}>
+                  {(body
+                    ? body.split(/\n\s*\n/)
+                    : [
+                        "Your composition will appear here. Begin typing on the left to see your document take shape.",
+                      ]
+                  ).map((para, i) => (
+                    <p
+                      key={i}
+                      data-pdf-section
+                      style={{
+                        fontFamily: '"Playfair Display", serif',
+                        fontSize: "12pt",
+                        lineHeight: 1.75,
+                        color: "#222",
+                        textAlign: "justify",
+                        whiteSpace: "pre-wrap",
+                        margin: "0 0 5mm 0",
+                      }}
+                    >
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
 
                 {/* Client */}
                 <p
