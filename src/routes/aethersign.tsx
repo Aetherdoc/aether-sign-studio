@@ -235,18 +235,11 @@ function AetherSignPage() {
               className="w-full max-w-[800px] overflow-hidden rounded-sm"
               style={{ boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6)" }}
             >
-              <div
-                ref={previewRef}
-                style={{
-                  width: "210mm",
-                  maxWidth: "100%",
-                  background: "#fafaf7",
-                  color: "#1a1a1a",
-                  padding: "28mm 24mm",
-                  boxSizing: "border-box",
-                  fontFamily: '"Playfair Display", Georgia, serif',
-                }}
-              >
+              <div ref={previewRef}>
+                {renderTemplate(template, { title, client, body, today })}
+              </div>
+            </div>
+          </div>
                 {/* Header rule */}
                 <div
                   data-pdf-section=""
