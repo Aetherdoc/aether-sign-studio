@@ -225,15 +225,13 @@ function AetherSignPage() {
 
           <div className="flex justify-center">
             <div
-              className="w-full max-w-[800px] overflow-hidden rounded-sm shadow-2xl"
+              className="w-full max-w-[800px] overflow-hidden rounded-sm"
               style={{ boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6)" }}
             >
               <div
                 ref={previewRef}
-                className="font-serif"
                 style={{
                   width: "210mm",
-                  minHeight: "297mm",
                   maxWidth: "100%",
                   background: "#fafaf7",
                   color: "#1a1a1a",
