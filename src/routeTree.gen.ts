@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AethersignRouteImport } from './routes/aethersign'
 import { Route as IndexRouteImport } from './routes/index'
 
+const AethersignRoute = AethersignRouteImport.update({
+  id: '/aethersign',
+  path: '/aethersign',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aethersign': typeof AethersignRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aethersign': typeof AethersignRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aethersign': typeof AethersignRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/aethersign'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/aethersign'
+  id: '__root__' | '/' | '/aethersign'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AethersignRoute: typeof AethersignRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/aethersign': {
+      id: '/aethersign'
+      path: '/aethersign'
+      fullPath: '/aethersign'
+      preLoaderRoute: typeof AethersignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AethersignRoute: AethersignRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
