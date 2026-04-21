@@ -81,7 +81,7 @@ function AetherSignPage() {
         const canvas = await html2canvas(section, {
           scale: 2,
           useCORS: true,
-          backgroundColor: "#fafaf7",
+          backgroundColor: getTemplateBackground(template),
         });
         const heightMM = (canvas.height / canvas.width) * CONTENT_W;
         const remaining = A4_H - MARGIN_Y - y;
