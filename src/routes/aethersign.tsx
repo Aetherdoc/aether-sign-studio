@@ -1,8 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { ArrowLeft, Download, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Download, RotateCcw, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  TEMPLATES,
+  getTemplateBackground,
+  renderTemplate,
+  type TemplateId,
+} from "@/lib/aether-templates";
 
 export const Route = createFileRoute("/aethersign")({
   head: () => ({
@@ -34,6 +40,7 @@ We are grateful for the opportunity to work alongside your team and look forward
 };
 
 function AetherSignPage() {
+  const [template, setTemplate] = useState<TemplateId>("executive");
   const [title, setTitle] = useState("");
   const [client, setClient] = useState("");
   const [body, setBody] = useState("");
@@ -74,7 +81,7 @@ function AetherSignPage() {
         const canvas = await html2canvas(section, {
           scale: 2,
           useCORS: true,
-          backgroundColor: "#fafaf7",
+          backgroundColor: getTemplateBackground(template),
         });
         const heightMM = (canvas.height / canvas.width) * CONTENT_W;
         const remaining = A4_H - MARGIN_Y - y;
@@ -173,6 +180,39 @@ function AetherSignPage() {
             </button>
           </div>
 
+          {/* Template picker */}
+          <div className="mb-8">
+            <p className="mb-3 text-xs uppercase tracking-[0.25em] text-white/50">Template</p>
+            <div className="grid grid-cols-5 gap-2">
+              {TEMPLATES.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTemplate(t.id)}
+                  className={`group relative flex flex-col items-center gap-1.5 rounded-lg border p-3 text-center transition ${
+                    template === t.id
+                      ? "border-[var(--gold)]/60 bg-[var(--gold)]/10"
+                      : "border-white/8 bg-white/3 hover:border-white/20"
+                  }`}
+                >
+                  <div className="flex gap-0.5">
+                    <span
+                      className="block h-3 w-3 rounded-full"
+                      style={{ background: t.swatch.bg, border: "1px solid rgba(255,255,255,0.15)" }}
+                    />
+                    <span
+                      className="block h-3 w-3 rounded-full"
+                      style={{ background: t.swatch.accent }}
+                    />
+                  </div>
+                  <span className="text-[10px] leading-tight text-white/70">{t.name}</span>
+                  {template === t.id && (
+                    <Check className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-[var(--gold)] p-0.5 text-black" />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="space-y-7">
             <Field label="Title">
               <input
@@ -228,145 +268,8 @@ function AetherSignPage() {
               className="w-full max-w-[800px] overflow-hidden rounded-sm"
               style={{ boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6)" }}
             >
-              <div
-                ref={previewRef}
-                style={{
-                  width: "210mm",
-                  maxWidth: "100%",
-                  background: "#fafaf7",
-                  color: "#1a1a1a",
-                  padding: "28mm 24mm",
-                  boxSizing: "border-box",
-                  fontFamily: '"Playfair Display", Georgia, serif',
-                }}
-              >
-                {/* Header rule */}
-                <div
-                  data-pdf-section=""
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "flex-end",
-                    paddingBottom: "8mm",
-                    borderBottom: "1px solid #d4b67a",
-                  }}
-                >
-                  <div>
-                    <div
-                      style={{
-                        fontFamily: "Inter, sans-serif",
-                        fontSize: "9px",
-                        letterSpacing: "0.3em",
-                        color: "#8a7a5a",
-                        textTransform: "uppercase",
-                      }}
-                    >
-                      Aether Doc
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: '"Playfair Display", serif',
-                        fontSize: "20px",
-                        color: "#d4b67a",
-                        marginTop: "2mm",
-                      }}
-                    >
-                      Æ
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "10px",
-                      letterSpacing: "0.15em",
-                      color: "#666",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {today}
-                  </div>
-                </div>
-
-                {/* Title */}
-                <div data-pdf-section="" style={{ marginTop: "22mm" }}>
-                  <h1
-                    style={{
-                      fontFamily: '"Playfair Display", serif',
-                      fontSize: "42px",
-                      fontWeight: 600,
-                      lineHeight: 1.1,
-                      letterSpacing: "-0.01em",
-                      color: "#1a1a1a",
-                      margin: 0,
-                    }}
-                  >
-                    {title || "Untitled Document"}
-                  </h1>
-                </div>
-
-                {/* Client */}
-                <div data-pdf-section="" style={{ marginTop: "8mm" }}>
-                  <p
-                    style={{
-                      fontFamily: "Inter, sans-serif",
-                      fontSize: "11px",
-                      letterSpacing: "0.15em",
-                      textTransform: "uppercase",
-                      color: "#8a7a5a",
-                      margin: "0 0 2mm 0",
-                    }}
-                  >
-                    Prepared for
-                  </p>
-                  <p
-                    style={{
-                      fontFamily: '"Playfair Display", serif',
-                      fontSize: "18px",
-                      fontStyle: "italic",
-                      color: "#333",
-                      margin: 0,
-                    }}
-                  >
-                    {client || "—"}
-                  </p>
-                </div>
-
-                {/* Divider */}
-                <div
-                  data-pdf-section=""
-                  style={{
-                    width: "20mm",
-                    height: "1px",
-                    background: "#d4b67a",
-                    marginTop: "12mm",
-                  }}
-                />
-
-                {/* Body — paragraph-per-section so pagination is clean */}
-                <div style={{ marginTop: "10mm" }}>
-                  {(body
-                    ? body.split(/\n\s*\n/)
-                    : [
-                        "Your composition will appear here. Begin typing on the left to see your document take shape.",
-                      ]
-                  ).map((para, i) => (
-                    <p
-                      key={i}
-                      data-pdf-section=""
-                      style={{
-                        fontFamily: '"Playfair Display", serif',
-                        fontSize: "12pt",
-                        lineHeight: 1.75,
-                        color: "#222",
-                        textAlign: "justify",
-                        whiteSpace: "pre-wrap",
-                        margin: "0 0 5mm 0",
-                      }}
-                    >
-                      {para}
-                    </p>
-                  ))}
-                </div>
+              <div ref={previewRef}>
+                {renderTemplate(template, { title, client, body, today })}
               </div>
             </div>
           </div>
