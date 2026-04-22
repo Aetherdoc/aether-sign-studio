@@ -285,7 +285,7 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, s
 }
 
 /* ============== MINIMAL ============== */
-function MinimalTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function MinimalTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   return (
     <div
       style={{
@@ -348,7 +348,7 @@ function MinimalTemplate({ title, client, body, today, pageLabel, signature, sig
     </div>
   );
 }
-function ModernTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function ModernTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   const accent = "#1f4d3f";
   return (
     <div
@@ -433,7 +433,7 @@ function ModernTemplate({ title, client, body, today, pageLabel, signature, sign
 }
 
 /* ============== EDITORIAL ============== */
-function EditorialTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function EditorialTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   const accent = "#8b1e1e";
   const paras = body ? body.split(/\n\s*\n/) : [FALLBACK_BODY];
 
@@ -563,7 +563,7 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
 }
 
 /* ============== MONOGRAM ============== */
-function MonogramTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function MonogramTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   const accent = "#1d2b4a";
   return (
     <div
