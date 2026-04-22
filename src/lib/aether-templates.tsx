@@ -194,7 +194,7 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel }: TemplatePr
 }
 
 /* ============== MINIMAL ============== */
-function MinimalTemplate({ title, client, body, today }: TemplateProps) {
+function MinimalTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
   return (
     <div
       style={{
