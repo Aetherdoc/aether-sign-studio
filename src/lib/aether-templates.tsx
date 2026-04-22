@@ -42,6 +42,12 @@ export const TEMPLATES: TemplateMeta[] = [
   },
 ];
 
+export interface CustomField {
+  id: string;
+  label: string;
+  value: string;
+}
+
 interface TemplateProps {
   title: string;
   client: string;
@@ -50,6 +56,53 @@ interface TemplateProps {
   pageLabel?: string;
   signature?: string;
   signerName?: string;
+  customFields?: CustomField[];
+}
+
+function CustomFieldsBlock({
+  fields,
+  color = "#888",
+  fontFamily = "Inter, sans-serif",
+  valueColor = "#222",
+}: {
+  fields?: CustomField[];
+  color?: string;
+  fontFamily?: string;
+  valueColor?: string;
+}) {
+  const visible = (fields ?? []).filter((f) => f.label.trim() || f.value.trim());
+  if (visible.length === 0) return null;
+  return (
+    <div
+      {...sectionAttr}
+      style={{
+        marginTop: "10mm",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "5mm 10mm",
+        fontFamily,
+      }}
+    >
+      {visible.map((f) => (
+        <div key={f.id}>
+          <div
+            style={{
+              fontSize: "9px",
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              color,
+              marginBottom: "1.5mm",
+            }}
+          >
+            {f.label || "—"}
+          </div>
+          <div style={{ fontSize: "12px", color: valueColor, lineHeight: 1.5 }}>
+            {f.value || "—"}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function SignatureBlock({
@@ -137,7 +190,7 @@ function BrandFooter({
 }
 
 /* ============== EXECUTIVE ============== */
-function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   return (
     <div
       style={{
@@ -210,6 +263,8 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, s
         style={{ width: "20mm", height: "1px", background: "#d4b67a", marginTop: "12mm" }}
       />
 
+      <CustomFieldsBlock fields={customFields} color="#8a7a5a" />
+
       <div style={{ marginTop: "10mm" }}>
         {renderParagraphs(
           body,
@@ -232,7 +287,7 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, s
 }
 
 /* ============== MINIMAL ============== */
-function MinimalTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function MinimalTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   return (
     <div
       style={{
@@ -277,6 +332,8 @@ function MinimalTemplate({ title, client, body, today, pageLabel, signature, sig
         </p>
       </div>
 
+      <CustomFieldsBlock fields={customFields} color="#666" />
+
       <div style={{ marginTop: "16mm" }}>
         {renderParagraphs(
           body,
@@ -295,7 +352,7 @@ function MinimalTemplate({ title, client, body, today, pageLabel, signature, sig
     </div>
   );
 }
-function ModernTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function ModernTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   const accent = "#1f4d3f";
   return (
     <div
@@ -359,6 +416,8 @@ function ModernTemplate({ title, client, body, today, pageLabel, signature, sign
           </div>
         </div>
 
+        <CustomFieldsBlock fields={customFields} color={accent} />
+
         <div>
           {renderParagraphs(
             body,
@@ -380,7 +439,7 @@ function ModernTemplate({ title, client, body, today, pageLabel, signature, sign
 }
 
 /* ============== EDITORIAL ============== */
-function EditorialTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function EditorialTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   const accent = "#8b1e1e";
   const paras = body ? body.split(/\n\s*\n/) : [FALLBACK_BODY];
 
@@ -464,6 +523,8 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
         }}
       />
 
+      <CustomFieldsBlock fields={customFields} color={accent} fontFamily='"Playfair Display", Georgia, serif' />
+
       <div>
         {paras.map((p, i) => (
           <p
@@ -510,7 +571,7 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
 }
 
 /* ============== MONOGRAM ============== */
-function MonogramTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function MonogramTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   const accent = "#1d2b4a";
   return (
     <div
@@ -576,6 +637,8 @@ function MonogramTemplate({ title, client, body, today, pageLabel, signature, si
         </p>
         <p style={{ fontSize: "20px", fontStyle: "italic", margin: 0 }}>{client || "—"}</p>
       </div>
+
+      <CustomFieldsBlock fields={customFields} color={accent} fontFamily='"Playfair Display", Georgia, serif' valueColor="#1d2b4a" />
 
       <div style={{ marginTop: "16mm" }}>
         {renderParagraphs(
