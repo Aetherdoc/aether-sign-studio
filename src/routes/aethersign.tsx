@@ -44,6 +44,7 @@ function AetherSignPage() {
   const [title, setTitle] = useState("");
   const [client, setClient] = useState("");
   const [body, setBody] = useState("");
+  const [showPageNumbers, setShowPageNumbers] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -104,7 +105,9 @@ function AetherSignPage() {
       for (let i = 1; i <= pageCount; i++) {
         pdf.setPage(i);
         pdf.text("CONFIDENTIAL · AETHER DOC", MARGIN_X, A4_H - 12);
-        pdf.text(`PAGE ${i} OF ${pageCount}`, A4_W - MARGIN_X, A4_H - 12, { align: "right" });
+        if (showPageNumbers) {
+          pdf.text(`PAGE ${i} OF ${pageCount}`, A4_W - MARGIN_X, A4_H - 12, { align: "right" });
+        }
       }
 
       const filename = `AetherSign-${(title || "Untitled").replace(/[^\w\s-]/g, "").trim() || "Untitled"}.pdf`;
@@ -210,7 +213,20 @@ function AetherSignPage() {
                   )}
                 </button>
               ))}
+          </div>
+
+          <label className="mb-8 flex cursor-pointer items-center justify-between rounded-lg border border-white/8 bg-white/3 px-4 py-3 transition hover:border-white/20">
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-white/70">Page Numbers</p>
+              <p className="mt-0.5 text-[10px] text-white/40">Show "Page 1 of N" in footer</p>
             </div>
+            <input
+              type="checkbox"
+              checked={showPageNumbers}
+              onChange={(e) => setShowPageNumbers(e.target.checked)}
+              className="h-4 w-4 cursor-pointer accent-[var(--gold)]"
+            />
+          </label>
           </div>
 
           <div className="space-y-7">
@@ -269,7 +285,13 @@ function AetherSignPage() {
               style={{ boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6)" }}
             >
               <div ref={previewRef}>
-                {renderTemplate(template, { title, client, body, today })}
+                {renderTemplate(template, {
+                  title,
+                  client,
+                  body,
+                  today,
+                  pageLabel: showPageNumbers ? "Page 1 of 1" : undefined,
+                })}
               </div>
             </div>
           </div>
