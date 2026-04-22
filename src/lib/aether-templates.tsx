@@ -478,7 +478,7 @@ function MonogramTemplate({ title, client, body, today, pageLabel }: TemplatePro
         fontFamily: '"Playfair Display", Georgia, serif',
       }}
     >
-      <div {...sectionAttr} style={{ marginTop: "18mm", textAlign: "center" }}>
+      <div {...sectionAttr} style={{ textAlign: "center" }}>
         <h1
           style={{
             fontSize: "36px",
