@@ -523,8 +523,9 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
         }}
       />
 
+      <CustomFieldsBlock fields={customFields} color={accent} fontFamily='"Playfair Display", Georgia, serif' />
+
       <div>
-        {paras.map((p, i) => (
           <p
             key={i}
             {...sectionAttr}
@@ -636,13 +637,9 @@ function MonogramTemplate({ title, client, body, today, pageLabel, signature, si
         <p style={{ fontSize: "20px", fontStyle: "italic", margin: 0 }}>{client || "—"}</p>
       </div>
 
+      <CustomFieldsBlock fields={customFields} color={accent} fontFamily='"Playfair Display", Georgia, serif' valueColor="#1d2b4a" />
+
       <div style={{ marginTop: "16mm" }}>
-        {renderParagraphs(
-          body,
-          {
-            fontSize: "12pt",
-            lineHeight: 1.8,
-            color: "#1d2b4a",
             textAlign: "justify",
             whiteSpace: "pre-wrap",
             margin: "0 0 5mm 0",
