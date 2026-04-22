@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { ArrowLeft, Check, Download, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Download, RotateCcw, Sparkles, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,8 +45,27 @@ function AetherSignPage() {
   const [client, setClient] = useState("");
   const [body, setBody] = useState("");
   const [showPageNumbers, setShowPageNumbers] = useState(false);
+  const [signature, setSignature] = useState<string | undefined>(undefined);
+  const [signerName, setSignerName] = useState("");
   const [downloading, setDownloading] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
+  const signatureInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSignatureUpload = (file: File | undefined) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file (PNG, JPG, SVG).");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Signature must be under 2 MB.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setSignature(reader.result as string);
+    reader.onerror = () => toast.error("Could not read the file.");
+    reader.readAsDataURL(file);
+  };
 
   const today = new Date().toLocaleDateString("en-US", {
     year: "numeric",
