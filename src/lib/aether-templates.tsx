@@ -175,6 +175,8 @@ function ExecutiveTemplate({ title, client, body, today }: TemplateProps) {
           FALLBACK_BODY,
         )}
       </div>
+
+      <BrandFooter color="#8a7a5a" />
     </div>
   );
 }
