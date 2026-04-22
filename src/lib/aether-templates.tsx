@@ -526,8 +526,7 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
       <CustomFieldsBlock fields={customFields} color={accent} fontFamily='"Playfair Display", Georgia, serif' />
 
       <div>
-          <p
-            key={i}
+        {paras.map((p, i) => (
             {...sectionAttr}
             style={{
               fontSize: "12pt",
