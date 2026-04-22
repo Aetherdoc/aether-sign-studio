@@ -147,6 +147,22 @@ function AetherSignPage() {
     setBody("");
     setSignature(undefined);
     setSignerName("");
+    setCustomFields([]);
+  };
+
+  const addCustomField = () => {
+    setCustomFields((prev) => [
+      ...prev,
+      { id: crypto.randomUUID(), label: "", value: "" },
+    ]);
+  };
+
+  const updateCustomField = (id: string, patch: Partial<CustomField>) => {
+    setCustomFields((prev) => prev.map((f) => (f.id === id ? { ...f, ...patch } : f)));
+  };
+
+  const removeCustomField = (id: string) => {
+    setCustomFields((prev) => prev.filter((f) => f.id !== id));
   };
 
   const handleSample = () => {
