@@ -487,18 +487,6 @@ function MonogramTemplate({ title, client, body, today }: TemplateProps) {
         >
           Æ
         </div>
-        <div
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "9px",
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            color: accent,
-            marginTop: "4mm",
-          }}
-        >
-          Aether Doc · Est. MMXXV
-        </div>
       </div>
 
       <div {...sectionAttr} style={{ marginTop: "18mm", textAlign: "center" }}>
