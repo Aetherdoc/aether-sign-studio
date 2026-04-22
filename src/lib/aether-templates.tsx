@@ -190,7 +190,7 @@ function BrandFooter({
 }
 
 /* ============== EXECUTIVE ============== */
-function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
+function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, signerName, customFields }: TemplateProps) {
   return (
     <div
       style={{
