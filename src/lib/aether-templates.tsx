@@ -42,6 +42,12 @@ export const TEMPLATES: TemplateMeta[] = [
   },
 ];
 
+export interface CustomField {
+  id: string;
+  label: string;
+  value: string;
+}
+
 interface TemplateProps {
   title: string;
   client: string;
@@ -50,6 +56,53 @@ interface TemplateProps {
   pageLabel?: string;
   signature?: string;
   signerName?: string;
+  customFields?: CustomField[];
+}
+
+function CustomFieldsBlock({
+  fields,
+  color = "#888",
+  fontFamily = "Inter, sans-serif",
+  valueColor = "#222",
+}: {
+  fields?: CustomField[];
+  color?: string;
+  fontFamily?: string;
+  valueColor?: string;
+}) {
+  const visible = (fields ?? []).filter((f) => f.label.trim() || f.value.trim());
+  if (visible.length === 0) return null;
+  return (
+    <div
+      {...sectionAttr}
+      style={{
+        marginTop: "10mm",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "5mm 10mm",
+        fontFamily,
+      }}
+    >
+      {visible.map((f) => (
+        <div key={f.id}>
+          <div
+            style={{
+              fontSize: "9px",
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              color,
+              marginBottom: "1.5mm",
+            }}
+          >
+            {f.label || "—"}
+          </div>
+          <div style={{ fontSize: "12px", color: valueColor, lineHeight: 1.5 }}>
+            {f.value || "—"}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function SignatureBlock({
