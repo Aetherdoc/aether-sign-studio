@@ -443,6 +443,7 @@ function AetherSignPage() {
                   pageLabel: showPageNumbers ? "Page 1 of 1" : undefined,
                   signature,
                   signerName,
+                  customFields,
                 })}
               </div>
             </div>
