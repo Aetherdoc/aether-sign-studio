@@ -47,6 +47,7 @@ interface TemplateProps {
   client: string;
   body: string;
   today: string;
+  pageLabel?: string;
 }
 
 const sectionAttr = { "data-pdf-section": "" } as Record<string, string>;
@@ -63,7 +64,15 @@ function renderParagraphs(body: string, style: CSSProperties, fallback: string) 
 const FALLBACK_BODY =
   "Your composition will appear here. Begin typing on the left to see your document take shape.";
 
-function BrandFooter({ color = "#888", fontFamily = "Inter, sans-serif" }: { color?: string; fontFamily?: string }) {
+function BrandFooter({
+  color = "#888",
+  fontFamily = "Inter, sans-serif",
+  pageLabel,
+}: {
+  color?: string;
+  fontFamily?: string;
+  pageLabel?: string;
+}) {
   return (
     <div
       {...sectionAttr}
@@ -71,7 +80,9 @@ function BrandFooter({ color = "#888", fontFamily = "Inter, sans-serif" }: { col
         marginTop: "20mm",
         paddingTop: "6mm",
         borderTop: `1px solid ${color}33`,
-        textAlign: "center",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
         fontFamily,
         fontSize: "9px",
         letterSpacing: "0.35em",
@@ -79,7 +90,8 @@ function BrandFooter({ color = "#888", fontFamily = "Inter, sans-serif" }: { col
         color,
       }}
     >
-      Aether Doc
+      <span style={{ flex: 1, textAlign: pageLabel ? "left" : "center" }}>Aether Doc</span>
+      {pageLabel && <span style={{ flex: 1, textAlign: "right" }}>{pageLabel}</span>}
     </div>
   );
 }
