@@ -48,6 +48,48 @@ interface TemplateProps {
   body: string;
   today: string;
   pageLabel?: string;
+  signature?: string;
+  signerName?: string;
+}
+
+function SignatureBlock({
+  signature,
+  signerName,
+  color = "#888",
+  fontFamily = "Inter, sans-serif",
+}: {
+  signature?: string;
+  signerName?: string;
+  color?: string;
+  fontFamily?: string;
+}) {
+  if (!signature && !signerName) return null;
+  return (
+    <div {...sectionAttr} style={{ marginTop: "18mm" }}>
+      {signature && (
+        <img
+          src={signature}
+          alt="Signature"
+          style={{ maxHeight: "20mm", maxWidth: "70mm", objectFit: "contain", display: "block" }}
+        />
+      )}
+      <div
+        style={{
+          marginTop: "2mm",
+          paddingTop: "2mm",
+          borderTop: `1px solid ${color}55`,
+          width: "70mm",
+          fontFamily,
+          fontSize: "9px",
+          letterSpacing: "0.25em",
+          textTransform: "uppercase",
+          color,
+        }}
+      >
+        {signerName || "Signed"}
+      </div>
+    </div>
+  );
 }
 
 const sectionAttr = { "data-pdf-section": "" } as Record<string, string>;
@@ -95,7 +137,7 @@ function BrandFooter({
 }
 
 /* ============== EXECUTIVE ============== */
-function ExecutiveTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   return (
     <div
       style={{
@@ -183,13 +225,14 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel }: TemplatePr
         )}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color="#8a7a5a" />
       <BrandFooter color="#8a7a5a" pageLabel={pageLabel} />
     </div>
   );
 }
 
 /* ============== MINIMAL ============== */
-function MinimalTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function MinimalTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   return (
     <div
       style={{
@@ -247,11 +290,12 @@ function MinimalTemplate({ title, client, body, today, pageLabel }: TemplateProp
         )}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color="#666" />
       <BrandFooter pageLabel={pageLabel} />
     </div>
   );
 }
-function ModernTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function ModernTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   const accent = "#1f4d3f";
   return (
     <div
@@ -328,6 +372,7 @@ function ModernTemplate({ title, client, body, today, pageLabel }: TemplateProps
           )}
         </div>
 
+        <SignatureBlock signature={signature} signerName={signerName} color={accent} />
         <BrandFooter color={accent} pageLabel={pageLabel} />
       </div>
     </div>
@@ -335,7 +380,7 @@ function ModernTemplate({ title, client, body, today, pageLabel }: TemplateProps
 }
 
 /* ============== EDITORIAL ============== */
-function EditorialTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function EditorialTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   const accent = "#8b1e1e";
   const paras = body ? body.split(/\n\s*\n/) : [FALLBACK_BODY];
 
@@ -458,13 +503,14 @@ function EditorialTemplate({ title, client, body, today, pageLabel }: TemplatePr
         ))}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color={accent} fontFamily='"Playfair Display", Georgia, serif' />
       <BrandFooter color={accent} pageLabel={pageLabel} />
     </div>
   );
 }
 
 /* ============== MONOGRAM ============== */
-function MonogramTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function MonogramTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   const accent = "#1d2b4a";
   return (
     <div
@@ -546,6 +592,7 @@ function MonogramTemplate({ title, client, body, today, pageLabel }: TemplatePro
         )}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color={accent} fontFamily='"Playfair Display", Georgia, serif' />
       <BrandFooter color={accent} pageLabel={pageLabel} />
     </div>
   );

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { ArrowLeft, Check, Download, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, Download, RotateCcw, Sparkles, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,8 +45,27 @@ function AetherSignPage() {
   const [client, setClient] = useState("");
   const [body, setBody] = useState("");
   const [showPageNumbers, setShowPageNumbers] = useState(false);
+  const [signature, setSignature] = useState<string | undefined>(undefined);
+  const [signerName, setSignerName] = useState("");
   const [downloading, setDownloading] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
+  const signatureInputRef = useRef<HTMLInputElement>(null);
+
+  const handleSignatureUpload = (file: File | undefined) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please upload an image file (PNG, JPG, SVG).");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Signature must be under 2 MB.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => setSignature(reader.result as string);
+    reader.onerror = () => toast.error("Could not read the file.");
+    reader.readAsDataURL(file);
+  };
 
   const today = new Date().toLocaleDateString("en-US", {
     year: "numeric",
@@ -124,6 +143,8 @@ function AetherSignPage() {
     setTitle("");
     setClient("");
     setBody("");
+    setSignature(undefined);
+    setSignerName("");
   };
 
   const handleSample = () => {
@@ -257,6 +278,57 @@ function AetherSignPage() {
                 style={{ borderBottom: "1px solid oklch(1 0 0 / 0.15)" }}
               />
             </Field>
+
+            <Field label="Signer Name" hint="Optional">
+              <input
+                value={signerName}
+                onChange={(e) => setSignerName(e.target.value)}
+                placeholder="e.g. Jane Doe, Managing Partner"
+                className="input-underline w-full text-lg text-white placeholder:text-white/25"
+              />
+            </Field>
+
+            <Field label="Signature" hint="PNG / JPG · max 2 MB">
+              <input
+                ref={signatureInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => handleSignatureUpload(e.target.files?.[0])}
+              />
+              {signature ? (
+                <div className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/5 p-3">
+                  <div className="flex h-12 w-28 items-center justify-center rounded bg-white/90 p-1">
+                    <img src={signature} alt="Signature preview" className="max-h-full max-w-full object-contain" />
+                  </div>
+                  <div className="flex flex-1 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => signatureInputRef.current?.click()}
+                      className="text-xs uppercase tracking-[0.2em] text-white/60 hover:text-[var(--gold)]"
+                    >
+                      Replace
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSignature(undefined)}
+                      className="ml-auto inline-flex items-center gap-1 text-xs uppercase tracking-[0.2em] text-white/40 hover:text-white/80"
+                    >
+                      <X className="h-3 w-3" /> Remove
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => signatureInputRef.current?.click()}
+                  className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-white/15 bg-white/3 px-4 py-5 text-sm text-white/50 transition hover:border-[var(--gold)]/50 hover:text-white/80"
+                >
+                  <Upload className="h-4 w-4" />
+                  Upload signature image
+                </button>
+              )}
+            </Field>
           </div>
 
           <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-6">
@@ -290,6 +362,8 @@ function AetherSignPage() {
                   body,
                   today,
                   pageLabel: showPageNumbers ? "Page 1 of 1" : undefined,
+                  signature,
+                  signerName,
                 })}
               </div>
             </div>
