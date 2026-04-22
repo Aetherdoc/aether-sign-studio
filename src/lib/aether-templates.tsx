@@ -225,6 +225,7 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, s
         )}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color="#8a7a5a" />
       <BrandFooter color="#8a7a5a" pageLabel={pageLabel} />
     </div>
   );
