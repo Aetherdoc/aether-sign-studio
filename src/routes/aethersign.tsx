@@ -143,6 +143,8 @@ function AetherSignPage() {
     setTitle("");
     setClient("");
     setBody("");
+    setSignature(undefined);
+    setSignerName("");
   };
 
   const handleSample = () => {
