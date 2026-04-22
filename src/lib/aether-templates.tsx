@@ -359,7 +359,7 @@ function EditorialTemplate({ title, client, body, today }: TemplateProps) {
           borderBottom: `2px solid ${accent}`,
         }}
       >
-        <span>The Aether Quarterly</span>
+        <span>Feature Edition</span>
         <span style={{ color: "#666" }}>{today}</span>
       </div>
 
