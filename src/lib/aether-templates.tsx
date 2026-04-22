@@ -380,7 +380,7 @@ function ModernTemplate({ title, client, body, today, pageLabel, signature, sign
 }
 
 /* ============== EDITORIAL ============== */
-function EditorialTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function EditorialTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   const accent = "#8b1e1e";
   const paras = body ? body.split(/\n\s*\n/) : [FALLBACK_BODY];
 
