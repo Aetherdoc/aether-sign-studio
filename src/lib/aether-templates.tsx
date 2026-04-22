@@ -97,7 +97,7 @@ function BrandFooter({
 }
 
 /* ============== EXECUTIVE ============== */
-function ExecutiveTemplate({ title, client, body, today }: TemplateProps) {
+function ExecutiveTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
   return (
     <div
       style={{
