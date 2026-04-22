@@ -263,6 +263,8 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, s
         style={{ width: "20mm", height: "1px", background: "#d4b67a", marginTop: "12mm" }}
       />
 
+      <CustomFieldsBlock fields={customFields} color="#8a7a5a" />
+
       <div style={{ marginTop: "10mm" }}>
         {renderParagraphs(
           body,
