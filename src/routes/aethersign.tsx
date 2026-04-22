@@ -213,7 +213,20 @@ function AetherSignPage() {
                   )}
                 </button>
               ))}
+          </div>
+
+          <label className="mb-8 flex cursor-pointer items-center justify-between rounded-lg border border-white/8 bg-white/3 px-4 py-3 transition hover:border-white/20">
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-white/70">Page Numbers</p>
+              <p className="mt-0.5 text-[10px] text-white/40">Show "Page 1 of N" in footer</p>
             </div>
+            <input
+              type="checkbox"
+              checked={showPageNumbers}
+              onChange={(e) => setShowPageNumbers(e.target.checked)}
+              className="h-4 w-4 cursor-pointer accent-[var(--gold)]"
+            />
+          </label>
           </div>
 
           <div className="space-y-7">
