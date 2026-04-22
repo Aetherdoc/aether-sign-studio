@@ -295,7 +295,7 @@ function MinimalTemplate({ title, client, body, today, pageLabel, signature, sig
     </div>
   );
 }
-function ModernTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function ModernTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   const accent = "#1f4d3f";
   return (
     <div
