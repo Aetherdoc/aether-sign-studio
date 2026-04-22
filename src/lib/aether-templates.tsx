@@ -569,7 +569,7 @@ function MonogramTemplate({ title, client, body, today, pageLabel }: TemplatePro
         )}
       </div>
 
-      <BrandFooter color={accent} />
+      <BrandFooter color={accent} pageLabel={pageLabel} />
     </div>
   );
 }
