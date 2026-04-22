@@ -274,7 +274,7 @@ function ModernTemplate({ title, client, body, today }: TemplateProps) {
             opacity: 0.7,
           }}
         >
-          Aether Doc · {today}
+          {today}
         </div>
         <h1
           style={{
