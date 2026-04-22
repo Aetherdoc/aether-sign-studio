@@ -347,6 +347,67 @@ function AetherSignPage() {
                 </button>
               )}
             </Field>
+
+            <div>
+              <div className="mb-3 flex items-center justify-between">
+                <div>
+                  <label className="text-xs uppercase tracking-[0.25em] text-white/50">
+                    Custom Fields
+                  </label>
+                  <p className="mt-1 text-[10px] text-white/30">
+                    Add labeled metadata (e.g. Reference No., Project, Effective Date)
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={addCustomField}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--gold)]/40 px-3 py-1 text-[10px] uppercase tracking-[0.2em] gold-text transition hover:bg-[var(--gold)]/10"
+                >
+                  <Plus className="h-3 w-3" />
+                  Add field
+                </button>
+              </div>
+
+              {customFields.length === 0 ? (
+                <p className="rounded-lg border border-dashed border-white/10 bg-white/3 px-4 py-5 text-center text-xs text-white/30">
+                  No custom fields yet.
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {customFields.map((f) => (
+                    <div
+                      key={f.id}
+                      className="flex items-start gap-2 rounded-lg border border-white/8 bg-white/3 p-3"
+                    >
+                      <div className="flex-1 space-y-2">
+                        <input
+                          value={f.label}
+                          onChange={(e) => updateCustomField(f.id, { label: e.target.value })}
+                          placeholder="Label (e.g. Reference No.)"
+                          maxLength={60}
+                          className="input-underline w-full text-sm text-white placeholder:text-white/25"
+                        />
+                        <input
+                          value={f.value}
+                          onChange={(e) => updateCustomField(f.id, { value: e.target.value })}
+                          placeholder="Value"
+                          maxLength={200}
+                          className="input-underline w-full text-sm text-white placeholder:text-white/25"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeCustomField(f.id)}
+                        className="mt-1 rounded p-1.5 text-white/40 transition hover:bg-white/5 hover:text-white/80"
+                        aria-label="Remove field"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-6">
