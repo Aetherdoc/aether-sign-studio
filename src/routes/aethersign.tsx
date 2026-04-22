@@ -285,7 +285,13 @@ function AetherSignPage() {
               style={{ boxShadow: "0 40px 80px -20px rgba(0,0,0,0.6)" }}
             >
               <div ref={previewRef}>
-                {renderTemplate(template, { title, client, body, today })}
+                {renderTemplate(template, {
+                  title,
+                  client,
+                  body,
+                  today,
+                  pageLabel: showPageNumbers ? "Page 1 of 1" : undefined,
+                })}
               </div>
             </div>
           </div>
