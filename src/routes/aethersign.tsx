@@ -48,6 +48,7 @@ function AetherSignPage() {
   const [showPageNumbers, setShowPageNumbers] = useState(false);
   const [signature, setSignature] = useState<string | undefined>(undefined);
   const [signerName, setSignerName] = useState("");
+  const [customFields, setCustomFields] = useState<CustomField[]>([]);
   const [downloading, setDownloading] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const signatureInputRef = useRef<HTMLInputElement>(null);
