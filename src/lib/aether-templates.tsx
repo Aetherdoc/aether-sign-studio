@@ -372,6 +372,7 @@ function ModernTemplate({ title, client, body, today, pageLabel, signature, sign
           )}
         </div>
 
+        <SignatureBlock signature={signature} signerName={signerName} color={accent} />
         <BrandFooter color={accent} pageLabel={pageLabel} />
       </div>
     </div>
