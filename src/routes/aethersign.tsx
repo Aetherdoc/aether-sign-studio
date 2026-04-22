@@ -105,7 +105,9 @@ function AetherSignPage() {
       for (let i = 1; i <= pageCount; i++) {
         pdf.setPage(i);
         pdf.text("CONFIDENTIAL · AETHER DOC", MARGIN_X, A4_H - 12);
-        pdf.text(`PAGE ${i} OF ${pageCount}`, A4_W - MARGIN_X, A4_H - 12, { align: "right" });
+        if (showPageNumbers) {
+          pdf.text(`PAGE ${i} OF ${pageCount}`, A4_W - MARGIN_X, A4_H - 12, { align: "right" });
+        }
       }
 
       const filename = `AetherSign-${(title || "Untitled").replace(/[^\w\s-]/g, "").trim() || "Untitled"}.pdf`;
