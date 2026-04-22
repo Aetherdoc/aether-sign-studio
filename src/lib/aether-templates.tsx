@@ -188,7 +188,7 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel }: TemplatePr
         )}
       </div>
 
-      <BrandFooter color="#8a7a5a" />
+      <BrandFooter color="#8a7a5a" pageLabel={pageLabel} />
     </div>
   );
 }
