@@ -640,6 +640,12 @@ function MonogramTemplate({ title, client, body, today, pageLabel, signature, si
       <CustomFieldsBlock fields={customFields} color={accent} fontFamily='"Playfair Display", Georgia, serif' valueColor="#1d2b4a" />
 
       <div style={{ marginTop: "16mm" }}>
+        {renderParagraphs(
+          body,
+          {
+            fontSize: "12pt",
+            lineHeight: 1.8,
+            color: "#1d2b4a",
             textAlign: "justify",
             whiteSpace: "pre-wrap",
             margin: "0 0 5mm 0",
