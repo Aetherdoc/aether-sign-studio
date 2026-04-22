@@ -320,6 +320,8 @@ function ModernTemplate({ title, client, body, today }: TemplateProps) {
             FALLBACK_BODY,
           )}
         </div>
+
+        <BrandFooter color={accent} />
       </div>
     </div>
   );
