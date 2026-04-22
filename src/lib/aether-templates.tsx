@@ -48,6 +48,48 @@ interface TemplateProps {
   body: string;
   today: string;
   pageLabel?: string;
+  signature?: string;
+  signerName?: string;
+}
+
+function SignatureBlock({
+  signature,
+  signerName,
+  color = "#888",
+  fontFamily = "Inter, sans-serif",
+}: {
+  signature?: string;
+  signerName?: string;
+  color?: string;
+  fontFamily?: string;
+}) {
+  if (!signature && !signerName) return null;
+  return (
+    <div {...sectionAttr} style={{ marginTop: "18mm" }}>
+      {signature && (
+        <img
+          src={signature}
+          alt="Signature"
+          style={{ maxHeight: "20mm", maxWidth: "70mm", objectFit: "contain", display: "block" }}
+        />
+      )}
+      <div
+        style={{
+          marginTop: "2mm",
+          paddingTop: "2mm",
+          borderTop: `1px solid ${color}55`,
+          width: "70mm",
+          fontFamily,
+          fontSize: "9px",
+          letterSpacing: "0.25em",
+          textTransform: "uppercase",
+          color,
+        }}
+      >
+        {signerName || "Signed"}
+      </div>
+    </div>
+  );
 }
 
 const sectionAttr = { "data-pdf-section": "" } as Record<string, string>;
