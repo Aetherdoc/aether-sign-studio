@@ -419,6 +419,11 @@ function ModernTemplate({ title, client, body, today, pageLabel, signature, sign
         <CustomFieldsBlock fields={customFields} color={accent} />
 
         <div>
+          {renderParagraphs(
+            body,
+            {
+              fontSize: "11pt",
+              lineHeight: 1.75,
               color: "#222",
               margin: "0 0 4mm 0",
             },
