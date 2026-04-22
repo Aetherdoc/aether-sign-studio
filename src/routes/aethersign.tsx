@@ -44,6 +44,7 @@ function AetherSignPage() {
   const [title, setTitle] = useState("");
   const [client, setClient] = useState("");
   const [body, setBody] = useState("");
+  const [showPageNumbers, setShowPageNumbers] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
