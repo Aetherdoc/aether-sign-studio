@@ -332,6 +332,8 @@ function MinimalTemplate({ title, client, body, today, pageLabel, signature, sig
         </p>
       </div>
 
+      <CustomFieldsBlock fields={customFields} color="#666" />
+
       <div style={{ marginTop: "16mm" }}>
         {renderParagraphs(
           body,
