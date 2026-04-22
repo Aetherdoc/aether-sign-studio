@@ -290,6 +290,7 @@ function MinimalTemplate({ title, client, body, today, pageLabel, signature, sig
         )}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color="#666" />
       <BrandFooter pageLabel={pageLabel} />
     </div>
   );
