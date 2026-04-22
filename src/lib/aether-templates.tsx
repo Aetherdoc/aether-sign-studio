@@ -333,7 +333,7 @@ function ModernTemplate({ title, client, body, today, pageLabel }: TemplateProps
           )}
         </div>
 
-        <BrandFooter color={accent} />
+        <BrandFooter color={accent} pageLabel={pageLabel} />
       </div>
     </div>
   );
