@@ -73,6 +73,7 @@ function BrandFooter({
   fontFamily?: string;
   pageLabel?: string;
 }) {
+  if (!pageLabel) return null;
   return (
     <div
       {...sectionAttr}
@@ -80,9 +81,7 @@ function BrandFooter({
         marginTop: "20mm",
         paddingTop: "6mm",
         borderTop: `1px solid ${color}33`,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+        textAlign: "right",
         fontFamily,
         fontSize: "9px",
         letterSpacing: "0.35em",
@@ -90,8 +89,7 @@ function BrandFooter({
         color,
       }}
     >
-      <span style={{ flex: 1, textAlign: pageLabel ? "left" : "center" }}>Aether Doc</span>
-      {pageLabel && <span style={{ flex: 1, textAlign: "right" }}>{pageLabel}</span>}
+      {pageLabel}
     </div>
   );
 }
