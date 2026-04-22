@@ -510,7 +510,7 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
 }
 
 /* ============== MONOGRAM ============== */
-function MonogramTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function MonogramTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   const accent = "#1d2b4a";
   return (
     <div
@@ -592,6 +592,7 @@ function MonogramTemplate({ title, client, body, today, pageLabel }: TemplatePro
         )}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color={accent} fontFamily='"Playfair Display", Georgia, serif' />
       <BrandFooter color={accent} pageLabel={pageLabel} />
     </div>
   );
