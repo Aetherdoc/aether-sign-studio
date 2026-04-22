@@ -256,7 +256,7 @@ function MinimalTemplate({ title, client, body, today, pageLabel }: TemplateProp
     </div>
   );
 }
-function ModernTemplate({ title, client, body, today }: TemplateProps) {
+function ModernTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
   const accent = "#1f4d3f";
   return (
     <div
