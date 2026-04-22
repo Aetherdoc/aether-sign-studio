@@ -450,6 +450,8 @@ function EditorialTemplate({ title, client, body, today }: TemplateProps) {
           </p>
         ))}
       </div>
+
+      <BrandFooter color={accent} />
     </div>
   );
 }
