@@ -463,7 +463,7 @@ function EditorialTemplate({ title, client, body, today, pageLabel }: TemplatePr
         ))}
       </div>
 
-      <BrandFooter color={accent} />
+      <BrandFooter color={accent} pageLabel={pageLabel} />
     </div>
   );
 }
