@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
-import { ArrowLeft, Check, Download, RotateCcw, Sparkles, Upload, X } from "lucide-react";
+import { ArrowLeft, Check, Download, Plus, RotateCcw, Sparkles, Trash2, Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   TEMPLATES,
   getTemplateBackground,
   renderTemplate,
+  type CustomField,
   type TemplateId,
 } from "@/lib/aether-templates";
 
