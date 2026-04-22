@@ -73,6 +73,7 @@ function BrandFooter({
   fontFamily?: string;
   pageLabel?: string;
 }) {
+  if (!pageLabel) return null;
   return (
     <div
       {...sectionAttr}
@@ -80,9 +81,7 @@ function BrandFooter({
         marginTop: "20mm",
         paddingTop: "6mm",
         borderTop: `1px solid ${color}33`,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
+        textAlign: "right",
         fontFamily,
         fontSize: "9px",
         letterSpacing: "0.35em",
@@ -90,8 +89,7 @@ function BrandFooter({
         color,
       }}
     >
-      <span style={{ flex: 1, textAlign: pageLabel ? "left" : "center" }}>Aether Doc</span>
-      {pageLabel && <span style={{ flex: 1, textAlign: "right" }}>{pageLabel}</span>}
+      {pageLabel}
     </div>
   );
 }
@@ -114,15 +112,12 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel }: TemplatePr
         {...sectionAttr}
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           alignItems: "flex-end",
           paddingBottom: "8mm",
           borderBottom: "1px solid #d4b67a",
         }}
       >
-        <div>
-          <div style={{ fontSize: "20px", color: "#d4b67a" }}>Æ</div>
-        </div>
         <div
           style={{
             fontFamily: "Inter, sans-serif",
@@ -484,24 +479,6 @@ function MonogramTemplate({ title, client, body, today, pageLabel }: TemplatePro
       }}
     >
       <div {...sectionAttr} style={{ textAlign: "center" }}>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "22mm",
-            height: "22mm",
-            border: `1.5px solid ${accent}`,
-            borderRadius: "50%",
-            fontSize: "20px",
-            fontWeight: 600,
-          }}
-        >
-          Æ
-        </div>
-      </div>
-
-      <div {...sectionAttr} style={{ marginTop: "18mm", textAlign: "center" }}>
         <h1
           style={{
             fontSize: "36px",

@@ -104,7 +104,6 @@ function AetherSignPage() {
       pdf.setTextColor(150);
       for (let i = 1; i <= pageCount; i++) {
         pdf.setPage(i);
-        pdf.text("CONFIDENTIAL · AETHER DOC", MARGIN_X, A4_H - 12);
         if (showPageNumbers) {
           pdf.text(`PAGE ${i} OF ${pageCount}`, A4_W - MARGIN_X, A4_H - 12, { align: "right" });
         }
