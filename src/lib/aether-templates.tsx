@@ -469,7 +469,7 @@ function EditorialTemplate({ title, client, body, today, pageLabel }: TemplatePr
 }
 
 /* ============== MONOGRAM ============== */
-function MonogramTemplate({ title, client, body, today }: TemplateProps) {
+function MonogramTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
   const accent = "#1d2b4a";
   return (
     <div
