@@ -503,6 +503,7 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
         ))}
       </div>
 
+      <SignatureBlock signature={signature} signerName={signerName} color={accent} fontFamily='"Playfair Display", Georgia, serif' />
       <BrandFooter color={accent} pageLabel={pageLabel} />
     </div>
   );
