@@ -109,18 +109,7 @@ function ExecutiveTemplate({ title, client, body, today }: TemplateProps) {
         }}
       >
         <div>
-          <div
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "9px",
-              letterSpacing: "0.3em",
-              color: "#8a7a5a",
-              textTransform: "uppercase",
-            }}
-          >
-            Aether Doc
-          </div>
-          <div style={{ fontSize: "20px", color: "#d4b67a", marginTop: "2mm" }}>Æ</div>
+          <div style={{ fontSize: "20px", color: "#d4b67a" }}>Æ</div>
         </div>
         <div
           style={{
