@@ -478,24 +478,6 @@ function MonogramTemplate({ title, client, body, today, pageLabel }: TemplatePro
         fontFamily: '"Playfair Display", Georgia, serif',
       }}
     >
-      <div {...sectionAttr} style={{ textAlign: "center" }}>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "22mm",
-            height: "22mm",
-            border: `1.5px solid ${accent}`,
-            borderRadius: "50%",
-            fontSize: "20px",
-            fontWeight: 600,
-          }}
-        >
-          Æ
-        </div>
-      </div>
-
       <div {...sectionAttr} style={{ marginTop: "18mm", textAlign: "center" }}>
         <h1
           style={{
