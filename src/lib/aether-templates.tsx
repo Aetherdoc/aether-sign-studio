@@ -239,11 +239,11 @@ function MinimalTemplate({ title, client, body, today }: TemplateProps) {
           FALLBACK_BODY,
         )}
       </div>
+
+      <BrandFooter />
     </div>
   );
 }
-
-/* ============== MODERN ============== */
 function ModernTemplate({ title, client, body, today }: TemplateProps) {
   const accent = "#1f4d3f";
   return (
