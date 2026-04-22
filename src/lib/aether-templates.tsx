@@ -63,6 +63,27 @@ function renderParagraphs(body: string, style: CSSProperties, fallback: string) 
 const FALLBACK_BODY =
   "Your composition will appear here. Begin typing on the left to see your document take shape.";
 
+function BrandFooter({ color = "#888", fontFamily = "Inter, sans-serif" }: { color?: string; fontFamily?: string }) {
+  return (
+    <div
+      {...sectionAttr}
+      style={{
+        marginTop: "20mm",
+        paddingTop: "6mm",
+        borderTop: `1px solid ${color}33`,
+        textAlign: "center",
+        fontFamily,
+        fontSize: "9px",
+        letterSpacing: "0.35em",
+        textTransform: "uppercase",
+        color,
+      }}
+    >
+      Aether Doc
+    </div>
+  );
+}
+
 /* ============== EXECUTIVE ============== */
 function ExecutiveTemplate({ title, client, body, today }: TemplateProps) {
   return (
@@ -88,18 +109,7 @@ function ExecutiveTemplate({ title, client, body, today }: TemplateProps) {
         }}
       >
         <div>
-          <div
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "9px",
-              letterSpacing: "0.3em",
-              color: "#8a7a5a",
-              textTransform: "uppercase",
-            }}
-          >
-            Aether Doc
-          </div>
-          <div style={{ fontSize: "20px", color: "#d4b67a", marginTop: "2mm" }}>Æ</div>
+          <div style={{ fontSize: "20px", color: "#d4b67a" }}>Æ</div>
         </div>
         <div
           style={{
@@ -165,6 +175,8 @@ function ExecutiveTemplate({ title, client, body, today }: TemplateProps) {
           FALLBACK_BODY,
         )}
       </div>
+
+      <BrandFooter color="#8a7a5a" />
     </div>
   );
 }
@@ -227,11 +239,11 @@ function MinimalTemplate({ title, client, body, today }: TemplateProps) {
           FALLBACK_BODY,
         )}
       </div>
+
+      <BrandFooter />
     </div>
   );
 }
-
-/* ============== MODERN ============== */
 function ModernTemplate({ title, client, body, today }: TemplateProps) {
   const accent = "#1f4d3f";
   return (
@@ -262,7 +274,7 @@ function ModernTemplate({ title, client, body, today }: TemplateProps) {
             opacity: 0.7,
           }}
         >
-          Aether Doc · {today}
+          {today}
         </div>
         <h1
           style={{
@@ -308,6 +320,8 @@ function ModernTemplate({ title, client, body, today }: TemplateProps) {
             FALLBACK_BODY,
           )}
         </div>
+
+        <BrandFooter color={accent} />
       </div>
     </div>
   );
@@ -345,7 +359,7 @@ function EditorialTemplate({ title, client, body, today }: TemplateProps) {
           borderBottom: `2px solid ${accent}`,
         }}
       >
-        <span>The Aether Quarterly</span>
+        <span>Feature Edition</span>
         <span style={{ color: "#666" }}>{today}</span>
       </div>
 
@@ -436,6 +450,8 @@ function EditorialTemplate({ title, client, body, today }: TemplateProps) {
           </p>
         ))}
       </div>
+
+      <BrandFooter color={accent} />
     </div>
   );
 }
@@ -470,18 +486,6 @@ function MonogramTemplate({ title, client, body, today }: TemplateProps) {
           }}
         >
           Æ
-        </div>
-        <div
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "9px",
-            letterSpacing: "0.4em",
-            textTransform: "uppercase",
-            color: accent,
-            marginTop: "4mm",
-          }}
-        >
-          Aether Doc · Est. MMXXV
         </div>
       </div>
 
@@ -552,6 +556,8 @@ function MonogramTemplate({ title, client, body, today }: TemplateProps) {
           FALLBACK_BODY,
         )}
       </div>
+
+      <BrandFooter color={accent} />
     </div>
   );
 }
