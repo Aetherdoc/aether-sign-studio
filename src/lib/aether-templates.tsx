@@ -112,15 +112,12 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel }: TemplatePr
         {...sectionAttr}
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           alignItems: "flex-end",
           paddingBottom: "8mm",
           borderBottom: "1px solid #d4b67a",
         }}
       >
-        <div>
-          <div style={{ fontSize: "20px", color: "#d4b67a" }}>Æ</div>
-        </div>
         <div
           style={{
             fontFamily: "Inter, sans-serif",
