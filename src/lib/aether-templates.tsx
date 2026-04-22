@@ -252,7 +252,7 @@ function MinimalTemplate({ title, client, body, today, pageLabel }: TemplateProp
         )}
       </div>
 
-      <BrandFooter />
+      <BrandFooter pageLabel={pageLabel} />
     </div>
   );
 }
