@@ -63,6 +63,27 @@ function renderParagraphs(body: string, style: CSSProperties, fallback: string) 
 const FALLBACK_BODY =
   "Your composition will appear here. Begin typing on the left to see your document take shape.";
 
+function BrandFooter({ color = "#888", fontFamily = "Inter, sans-serif" }: { color?: string; fontFamily?: string }) {
+  return (
+    <div
+      {...sectionAttr}
+      style={{
+        marginTop: "20mm",
+        paddingTop: "6mm",
+        borderTop: `1px solid ${color}33`,
+        textAlign: "center",
+        fontFamily,
+        fontSize: "9px",
+        letterSpacing: "0.35em",
+        textTransform: "uppercase",
+        color,
+      }}
+    >
+      Aether Doc
+    </div>
+  );
+}
+
 /* ============== EXECUTIVE ============== */
 function ExecutiveTemplate({ title, client, body, today }: TemplateProps) {
   return (
