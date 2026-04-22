@@ -232,7 +232,7 @@ function ExecutiveTemplate({ title, client, body, today, pageLabel, signature, s
 }
 
 /* ============== MINIMAL ============== */
-function MinimalTemplate({ title, client, body, today, pageLabel }: TemplateProps) {
+function MinimalTemplate({ title, client, body, today, pageLabel, signature, signerName }: TemplateProps) {
   return (
     <div
       style={{
