@@ -527,6 +527,8 @@ function EditorialTemplate({ title, client, body, today, pageLabel, signature, s
 
       <div>
         {paras.map((p, i) => (
+          <p
+            key={i}
             {...sectionAttr}
             style={{
               fontSize: "12pt",
