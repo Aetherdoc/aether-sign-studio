@@ -4,6 +4,10 @@
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
   "main": "@tanstack/react-start/server-entry",
+  "assets": {
+    "binding": "ASSETS",
+    "not_found_handling": "none"
+  },
   "observability": {
     "enabled": true
   }
