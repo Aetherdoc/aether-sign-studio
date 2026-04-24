@@ -13,6 +13,14 @@ Use **exactly** these settings:
 | Root directory        | `/`                                                         |
 | Build output dir      | leave blank (Wrangler handles it)                           |
 
+**Important:** the repo `wrangler.jsonc` must use the **same Worker name** as the Cloudflare project. This repo is now set to:
+
+```jsonc
+"name": "aether-sign-studio"
+```
+
+If Cloudflare shows a banner telling you to update `wrangler.jsonc`, it means the Worker name in the dashboard and the repo config do not match.
+
 ## 2. Build environment variables
 
 Under **Settings → Build → Variables**, add:
@@ -38,6 +46,12 @@ Under **Settings → Variables and Secrets**, add:
 `VITE_*` variables are needed at **build time** (bundled into the client). `SUPABASE_*` (no prefix) are needed at **runtime** by SSR server functions. Add both sets.
 
 ## 4. Click **Save and Deploy** (or **Retry build** if you already created the project).
+
+If it still fails in the Cloudflare UI, check these three items first:
+
+1. **Build command** is exactly `npm ci && npm run build` (not `npm install && npm run build`)
+2. **Variables and Secrets** is **not empty** — add the required `VITE_*` and `SUPABASE_*` values
+3. The Worker/project name shown in Cloudflare matches `aether-sign-studio`
 
 ---
 
