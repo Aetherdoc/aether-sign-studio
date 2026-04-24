@@ -1,56 +1,65 @@
+## Why we are NOT rewriting the app
 
-# Aether Doc — AetherSign Tool
+Your build fails at **"Installing tools and dependencies"** — Cloudflare hasn't even reached your code yet. This is an `npm install` / package manager problem, not a TypeScript/React problem. Rewriting AetherSign in another language would:
 
-A browser-based document formatter with live PDF preview and one-click download. Fully client-side using `html2pdf.js`.
+- Throw away your entire app (templates, signing flow, custom fields, PDF export, UI)
+- Not fix the install step (any Node-based framework hits the same installer)
+- Cloudflare Workers runs **JavaScript only** anyway — Python/Go/etc. would require a totally different platform
 
-## Routes
-- `/` — Aether Doc landing page introducing the product suite, with a CTA into AetherSign.
-- `/aethersign` — The AetherSign formatter tool (split-screen workspace).
+The fix is small config changes. Keep the app as-is.
 
-## Visual Direction — Dark Executive Glassmorphism
-- **Background**: Deep near-black (`#0a0a0f`) with subtle radial gradient orbs (muted indigo + warm gold) blurred behind content for depth.
-- **Glass surfaces**: Semi-transparent panels (`bg-white/5`), `backdrop-blur-xl`, hairline `border-white/10`, soft inner highlight.
-- **Accent**: Warm champagne gold (`#d4b67a`) for primary actions, dividers, and the wordmark — signals "executive."
-- **Typography**: Serif display (Playfair Display) for the Aether Doc wordmark and PDF document title; Inter for UI and body.
-- **Micro-details**: Subtle grain overlay, smooth fade-ins, gold underline on focused inputs.
+## Root causes in this repo
 
-## `/aethersign` — Split-Screen Workspace
+1. **Two competing lockfiles**: `bun.lockb` AND `package-lock.json` both exist. Cloudflare's auto-detector picks one and the install can fail or use mismatched versions.
+2. **No Node version pin**: Cloudflare may default to Node 18, which can't reliably install React 19 + Vite 7 + TanStack Start 1.x.
+3. **Build command** in your dashboard says `npm install && npm run build`, but a stale `bun.lockb` still triggers Bun heuristics on some builders.
 
-**Top bar (glass)**: Aether Doc wordmark left · "AetherSign" label center · Download PDF button (gold) right.
+## Plan
 
-**Left panel — Data Input (≈40% width, glass card)**
-- Section heading: "Document Details"
-- Fields:
-  - **Title** — single-line input
-  - **Client Name** — single-line input
-  - **Body Text** — large textarea (auto-grow), placeholder showing example formal copy
-- Optional niceties: character count under body, "Reset" ghost button, "Load sample" link.
-- Inputs: transparent bg, bottom-border style, gold focus ring.
+### 1. Pin the Node version
+Create `.nvmrc` containing `20` so Cloudflare's builder uses Node 20.
 
-**Right panel — Live Preview (≈60% width)**
-- Rendered inside a realistic PDF "page" — white/cream sheet (`#fafaf7`), subtle shadow, A4 aspect ratio, internal padding mimicking print margins.
-- Layout of the PDF page:
-  - Small uppercase "AETHER DOC" monogram top-left + thin gold rule
-  - Date (auto, today) top-right
-  - Large serif **Title**
-  - "Prepared for: **Client Name**" subtitle
-  - Divider
-  - **Body Text** in justified serif paragraphs, preserving line breaks
-  - Footer: "Confidential · Aether Doc" + page mark
-- Updates live as the user types (controlled state, no debounce needed).
+### 2. Pick one package manager (npm) and remove the other lockfile
+- Delete `bun.lockb` (keep `package-lock.json`)
+- This guarantees `npm ci` / `npm install` works deterministically on Cloudflare
 
-**Download behavior**
-- Button triggers `html2pdf.js` on the preview node.
-- Output: A4, high-resolution (scale 2), filename `AetherSign-{Title-or-Untitled}.pdf`.
-- Toast confirmation on success; graceful error toast on failure.
+### 3. Add an `engines` field to `package.json`
+```json
+"engines": { "node": ">=20" }
+```
+Belt-and-suspenders signal to the installer.
 
-## `/` — Landing Page
-- Hero: "Aether Doc — Documents, refined." with gold accent + CTA "Open AetherSign".
-- Brief 3-card section describing the suite (AetherSign featured, two "coming soon" placeholders) so the brand feels like a product family.
-- Same dark glass aesthetic for consistency.
+### 4. Update `DEPLOY.md` with the exact, verified Cloudflare Workers Builds settings
+| Setting | Value |
+|---|---|
+| Build command | `npm ci && npm run build` |
+| Deploy command | `npx wrangler deploy --config dist/server/wrangler.json` |
+| Root directory | `/` |
+| Node version (env var `NODE_VERSION`) | `20` |
 
-## Technical Notes
-- Add `html2pdf.js` dependency; load only on the AetherSign route.
-- Use shadcn `Input`, `Textarea`, `Button`, `sonner` for toast.
-- Per-route SEO metadata (title, description, og tags) for `/` and `/aethersign`.
-- Responsive: on screens <1024px, stack panels vertically with the preview scaled to fit.
+Also document: in Cloudflare dashboard → your Worker → **Settings → Variables and Secrets**, add as plain text (not secret unless noted):
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (mark as Secret)
+
+These must exist **before** clicking Retry build, otherwise the SSR Worker will 500 even after a clean install.
+
+### 5. Verify locally
+Run `npm ci && npm run build` in the sandbox to confirm the install + build path succeeds end-to-end with the same commands Cloudflare will run.
+
+## What you do after I apply this
+
+1. Push the changes (Lovable handles this).
+2. In Cloudflare dashboard → your Worker → Settings → Build:
+   - Set Build command: `npm ci && npm run build`
+   - Set Deploy command: `npx wrangler deploy --config dist/server/wrangler.json`
+   - Add environment variable `NODE_VERSION` = `20` under **Build variables**
+3. Add the three Supabase env vars under **Variables and Secrets**.
+4. Click **Retry build**.
+
+## Files to change
+
+- create `.nvmrc`
+- edit `package.json` (add `engines`)
+- delete `bun.lockb`
+- edit `DEPLOY.md` (clearer dashboard instructions + env vars section)
