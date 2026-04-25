@@ -1,0 +1,17 @@
+[build]
+  command = "npm ci && npm run build"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# TanStack Start SSR entry runs as a Netlify Function
+[functions]
+  directory = "dist/server"
+  node_bundler = "esbuild"
+
+# Send all non-asset requests to the SSR function
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/index"
+  status = 200
