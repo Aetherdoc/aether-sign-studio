@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AethersignRouteImport } from './routes/aethersign'
+import { Route as AetherinvoiceRouteImport } from './routes/aetherinvoice'
 import { Route as IndexRouteImport } from './routes/index'
 
 const AethersignRoute = AethersignRouteImport.update({
   id: '/aethersign',
   path: '/aethersign',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AetherinvoiceRoute = AetherinvoiceRouteImport.update({
+  id: '/aetherinvoice',
+  path: '/aetherinvoice',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aetherinvoice': typeof AetherinvoiceRoute
   '/aethersign': typeof AethersignRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aetherinvoice': typeof AetherinvoiceRoute
   '/aethersign': typeof AethersignRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aetherinvoice': typeof AetherinvoiceRoute
   '/aethersign': typeof AethersignRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aethersign'
+  fullPaths: '/' | '/aetherinvoice' | '/aethersign'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aethersign'
-  id: '__root__' | '/' | '/aethersign'
+  to: '/' | '/aetherinvoice' | '/aethersign'
+  id: '__root__' | '/' | '/aetherinvoice' | '/aethersign'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AetherinvoiceRoute: typeof AetherinvoiceRoute
   AethersignRoute: typeof AethersignRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/aethersign'
       fullPath: '/aethersign'
       preLoaderRoute: typeof AethersignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aetherinvoice': {
+      id: '/aetherinvoice'
+      path: '/aetherinvoice'
+      fullPath: '/aetherinvoice'
+      preLoaderRoute: typeof AetherinvoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AetherinvoiceRoute: AetherinvoiceRoute,
   AethersignRoute: AethersignRoute,
 }
 export const routeTree = rootRouteImport
