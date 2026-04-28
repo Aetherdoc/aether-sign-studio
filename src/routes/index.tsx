@@ -97,6 +97,7 @@ function LandingPage() {
             description="Compose and export pristine, client-ready documents in your browser."
             icon={<FileSignature className="h-5 w-5" />}
             cta="Launch"
+            to="/aethersign"
           />
           <SuiteCard
             available
