@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, FileSignature, Sparkles, FileStack } from "lucide-react";
+import { ArrowRight, FileSignature, Receipt, FileStack } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -97,12 +97,15 @@ function LandingPage() {
             description="Compose and export pristine, client-ready documents in your browser."
             icon={<FileSignature className="h-5 w-5" />}
             cta="Launch"
+            to="/aethersign"
           />
           <SuiteCard
-            title="AetherDraft"
-            description="Letterhead-grade letters and proposals with an editorial typesetter."
-            icon={<Sparkles className="h-5 w-5" />}
-            cta="Coming soon"
+            available
+            title="AetherInvoice"
+            description="Generate beautifully formatted invoices with your logo, line items, and tax."
+            icon={<Receipt className="h-5 w-5" />}
+            cta="Launch"
+            to="/aetherinvoice"
           />
           <SuiteCard
             title="AetherVault"
@@ -133,12 +136,14 @@ function SuiteCard({
   icon,
   cta,
   available,
+  to,
 }: {
   title: string;
   description: string;
   icon: React.ReactNode;
   cta: string;
   available?: boolean;
+  to?: "/aethersign" | "/aetherinvoice";
 }) {
   const inner = (
     <div
@@ -161,5 +166,5 @@ function SuiteCard({
       </div>
     </div>
   );
-  return available ? <Link to="/aethersign">{inner}</Link> : <div>{inner}</div>;
+  return available && to ? <Link to={to}>{inner}</Link> : <div>{inner}</div>;
 }
