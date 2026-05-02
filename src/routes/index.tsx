@@ -1,19 +1,44 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, FileSignature, Receipt, FileStack } from "lucide-react";
+import { ArrowRight, FileSignature, Receipt, FileStack, Lock, Sparkles, Zap, Globe } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Aether Doc — Documents, refined." },
+      { title: "Aether Doc — Free Browser-Based Document & Invoice Generator" },
       {
         name: "description",
         content:
-          "Aether Doc is a suite of refined, browser-based document tools for executives. Format, sign, and deliver beautifully — no servers, no fuss.",
+          "Create elegant PDFs and professional invoices in your browser with Aether Doc. Free, private, no signup. Tools for freelancers, consultants, and small businesses.",
       },
-      { property: "og:title", content: "Aether Doc — Documents, refined." },
+      { property: "og:title", content: "Aether Doc — Free Browser-Based Document & Invoice Generator" },
       {
         property: "og:description",
-        content: "A premium suite of browser-based document tools for the modern executive.",
+        content: "Free browser-based tools to create premium documents and professional invoices. Private, instant, no signup.",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Aether Doc",
+          url: "https://aether-sign-studio.lovable.app",
+          description:
+            "Free browser-based tools to create premium documents and professional invoices.",
+          publisher: { "@type": "Organization", name: "Aether Doc" },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "AetherInvoice",
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Any (Web Browser)",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        }),
       },
     ],
   }),
