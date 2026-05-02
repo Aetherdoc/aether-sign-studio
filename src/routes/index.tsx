@@ -147,14 +147,70 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">How it works</p>
+        <h2 className="font-serif text-3xl md:text-4xl">From blank page to polished PDF in three steps.</h2>
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <Step number="01" title="Open the tool" body="Visit AetherSign or AetherInvoice in any modern browser. There's nothing to install and no account to create." />
+          <Step number="02" title="Compose your content" body="Type or paste your text, add line items and your logo, then watch the live preview update as you work." />
+          <Step number="03" title="Export a PDF" body="Click download to save a print-grade A4 PDF straight to your device. Send it to clients with confidence." />
+        </div>
+      </section>
+
+      {/* Why */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">Why Aether Doc</p>
+        <h2 className="font-serif text-3xl md:text-4xl">A quieter way to handle paperwork.</h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <Feature icon={<Lock className="h-5 w-5" />} title="Private by design" body="Everything runs in your browser. We never see your documents." />
+          <Feature icon={<Zap className="h-5 w-5" />} title="Instant" body="No signups, no loading dashboards. Open the tool and start creating." />
+          <Feature icon={<Sparkles className="h-5 w-5" />} title="Beautifully crafted" body="Typography and layout tuned for serious, executive-grade output." />
+          <Feature icon={<Globe className="h-5 w-5" />} title="Free forever" body="Both AetherSign and AetherInvoice are free for individual use." />
+        </div>
+      </section>
+
+      {/* Use cases */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">Use cases</p>
+        <h2 className="font-serif text-3xl md:text-4xl">Built for the work you actually do.</h2>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <UseCase title="Freelancers & consultants" body="Send polished invoices and engagement letters that match the calibre of your work." />
+          <UseCase title="Small agencies" body="Produce proposals, statements of work, and client-ready memos in minutes — not hours." />
+          <UseCase title="Founders & operators" body="Draft offer letters, NDAs, and internal documents without opening a heavyweight word processor." />
+          <UseCase title="Anyone billing clients" body="Generate accurate invoices with your logo, line items, tax, and payment terms." />
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="philosophy" className="relative z-10 mx-auto max-w-4xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">FAQ</p>
+        <h2 className="font-serif text-3xl md:text-4xl">Common questions</h2>
+        <div className="mt-10 space-y-6">
+          <Faq q="Is Aether Doc really free?" a="Yes. Both AetherSign and AetherInvoice are free to use without an account or credit card." />
+          <Faq q="Where do my documents go?" a="Nowhere but your device. Documents and invoices are generated in your browser and downloaded directly. We never receive a copy." />
+          <Faq q="Do I need to install anything?" a="No. Aether Doc runs entirely in any modern desktop or laptop browser." />
+          <Faq q="Can I use the invoices for my business?" a="Yes. The PDFs are professionally formatted and suitable for client billing. Always verify local tax and invoicing requirements." />
+        </div>
+        <div className="mt-10">
+          <Link to="/about" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] gold-text">
+            Read more about us <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer
-        id="philosophy"
-        className="relative z-10 border-t border-white/5 px-6 py-10 lg:px-12"
-      >
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 text-sm text-white/40 md:flex-row md:items-center">
+      <footer className="relative z-10 border-t border-white/5 px-6 py-10 lg:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 text-sm text-white/40 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Aether Doc. Crafted with restraint.</p>
-          <p className="font-serif italic">"Less, but better."</p>
+          <nav className="flex flex-wrap gap-5">
+            <Link to="/about" className="hover:text-white">About</Link>
+            <Link to="/aethersign" className="hover:text-white">AetherSign</Link>
+            <Link to="/aetherinvoice" className="hover:text-white">AetherInvoice</Link>
+            <Link to="/contact" className="hover:text-white">Contact</Link>
+            <Link to="/privacy" className="hover:text-white">Privacy</Link>
+            <Link to="/terms" className="hover:text-white">Terms</Link>
+          </nav>
         </div>
       </footer>
     </main>
