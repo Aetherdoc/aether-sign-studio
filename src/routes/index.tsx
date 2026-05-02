@@ -1,19 +1,44 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, FileSignature, Receipt, FileStack } from "lucide-react";
+import { ArrowRight, FileSignature, Receipt, FileStack, Lock, Sparkles, Zap, Globe } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Aether Doc — Documents, refined." },
+      { title: "Aether Doc — Free Browser-Based Document & Invoice Generator" },
       {
         name: "description",
         content:
-          "Aether Doc is a suite of refined, browser-based document tools for executives. Format, sign, and deliver beautifully — no servers, no fuss.",
+          "Create elegant PDFs and professional invoices in your browser with Aether Doc. Free, private, no signup. Tools for freelancers, consultants, and small businesses.",
       },
-      { property: "og:title", content: "Aether Doc — Documents, refined." },
+      { property: "og:title", content: "Aether Doc — Free Browser-Based Document & Invoice Generator" },
       {
         property: "og:description",
-        content: "A premium suite of browser-based document tools for the modern executive.",
+        content: "Free browser-based tools to create premium documents and professional invoices. Private, instant, no signup.",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Aether Doc",
+          url: "https://aether-sign-studio.lovable.app",
+          description:
+            "Free browser-based tools to create premium documents and professional invoices.",
+          publisher: { "@type": "Organization", name: "Aether Doc" },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          name: "AetherInvoice",
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Any (Web Browser)",
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        }),
       },
     ],
   }),
@@ -122,14 +147,70 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">How it works</p>
+        <h2 className="font-serif text-3xl md:text-4xl">From blank page to polished PDF in three steps.</h2>
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <Step number="01" title="Open the tool" body="Visit AetherSign or AetherInvoice in any modern browser. There's nothing to install and no account to create." />
+          <Step number="02" title="Compose your content" body="Type or paste your text, add line items and your logo, then watch the live preview update as you work." />
+          <Step number="03" title="Export a PDF" body="Click download to save a print-grade A4 PDF straight to your device. Send it to clients with confidence." />
+        </div>
+      </section>
+
+      {/* Why */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">Why Aether Doc</p>
+        <h2 className="font-serif text-3xl md:text-4xl">A quieter way to handle paperwork.</h2>
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <Feature icon={<Lock className="h-5 w-5" />} title="Private by design" body="Everything runs in your browser. We never see your documents." />
+          <Feature icon={<Zap className="h-5 w-5" />} title="Instant" body="No signups, no loading dashboards. Open the tool and start creating." />
+          <Feature icon={<Sparkles className="h-5 w-5" />} title="Beautifully crafted" body="Typography and layout tuned for serious, executive-grade output." />
+          <Feature icon={<Globe className="h-5 w-5" />} title="Free forever" body="Both AetherSign and AetherInvoice are free for individual use." />
+        </div>
+      </section>
+
+      {/* Use cases */}
+      <section className="relative z-10 mx-auto max-w-7xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">Use cases</p>
+        <h2 className="font-serif text-3xl md:text-4xl">Built for the work you actually do.</h2>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          <UseCase title="Freelancers & consultants" body="Send polished invoices and engagement letters that match the calibre of your work." />
+          <UseCase title="Small agencies" body="Produce proposals, statements of work, and client-ready memos in minutes — not hours." />
+          <UseCase title="Founders & operators" body="Draft offer letters, NDAs, and internal documents without opening a heavyweight word processor." />
+          <UseCase title="Anyone billing clients" body="Generate accurate invoices with your logo, line items, tax, and payment terms." />
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="philosophy" className="relative z-10 mx-auto max-w-4xl px-6 pb-32 lg:px-12">
+        <p className="mb-3 text-xs uppercase tracking-[0.3em] gold-text">FAQ</p>
+        <h2 className="font-serif text-3xl md:text-4xl">Common questions</h2>
+        <div className="mt-10 space-y-6">
+          <Faq q="Is Aether Doc really free?" a="Yes. Both AetherSign and AetherInvoice are free to use without an account or credit card." />
+          <Faq q="Where do my documents go?" a="Nowhere but your device. Documents and invoices are generated in your browser and downloaded directly. We never receive a copy." />
+          <Faq q="Do I need to install anything?" a="No. Aether Doc runs entirely in any modern desktop or laptop browser." />
+          <Faq q="Can I use the invoices for my business?" a="Yes. The PDFs are professionally formatted and suitable for client billing. Always verify local tax and invoicing requirements." />
+        </div>
+        <div className="mt-10">
+          <Link to="/about" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] gold-text">
+            Read more about us <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer
-        id="philosophy"
-        className="relative z-10 border-t border-white/5 px-6 py-10 lg:px-12"
-      >
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-4 text-sm text-white/40 md:flex-row md:items-center">
+      <footer className="relative z-10 border-t border-white/5 px-6 py-10 lg:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 text-sm text-white/40 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Aether Doc. Crafted with restraint.</p>
-          <p className="font-serif italic">"Less, but better."</p>
+          <nav className="flex flex-wrap gap-5">
+            <Link to="/about" className="hover:text-white">About</Link>
+            <Link to="/aethersign" className="hover:text-white">AetherSign</Link>
+            <Link to="/aetherinvoice" className="hover:text-white">AetherInvoice</Link>
+            <Link to="/contact" className="hover:text-white">Contact</Link>
+            <Link to="/privacy" className="hover:text-white">Privacy</Link>
+            <Link to="/terms" className="hover:text-white">Terms</Link>
+          </nav>
         </div>
       </footer>
     </main>
@@ -173,4 +254,44 @@ function SuiteCard({
     </div>
   );
   return available && to ? <Link to={to}>{inner}</Link> : <div>{inner}</div>;
+}
+
+function Step({ number, title, body }: { number: string; title: string; body: string }) {
+  return (
+    <div className="glass-panel rounded-2xl p-8">
+      <div className="font-serif text-sm gold-text">{number}</div>
+      <h3 className="mt-4 font-serif text-xl">{title}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-white/60">{body}</p>
+    </div>
+  );
+}
+
+function Feature({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
+  return (
+    <div className="glass-panel rounded-2xl p-6">
+      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 gold-text">
+        {icon}
+      </div>
+      <h3 className="font-serif text-lg">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-white/60">{body}</p>
+    </div>
+  );
+}
+
+function UseCase({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="glass-panel rounded-2xl p-6">
+      <h3 className="font-serif text-xl">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-white/60">{body}</p>
+    </div>
+  );
+}
+
+function Faq({ q, a }: { q: string; a: string }) {
+  return (
+    <div className="border-b border-white/10 pb-6">
+      <h3 className="font-serif text-lg text-white">{q}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-white/60">{a}</p>
+    </div>
+  );
 }
