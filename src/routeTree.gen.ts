@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AethersignRouteImport } from './routes/aethersign'
 import { Route as AetherinvoiceRouteImport } from './routes/aetherinvoice'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
 const AethersignRoute = AethersignRouteImport.update({
@@ -23,6 +24,11 @@ const AetherinvoiceRoute = AetherinvoiceRouteImport.update({
   path: '/aetherinvoice',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/aetherinvoice': typeof AetherinvoiceRoute
   '/aethersign': typeof AethersignRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/aetherinvoice': typeof AetherinvoiceRoute
   '/aethersign': typeof AethersignRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/aetherinvoice': typeof AetherinvoiceRoute
   '/aethersign': typeof AethersignRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/aetherinvoice' | '/aethersign'
+  fullPaths: '/' | '/about' | '/aetherinvoice' | '/aethersign'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/aetherinvoice' | '/aethersign'
-  id: '__root__' | '/' | '/aetherinvoice' | '/aethersign'
+  to: '/' | '/about' | '/aetherinvoice' | '/aethersign'
+  id: '__root__' | '/' | '/about' | '/aetherinvoice' | '/aethersign'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   AetherinvoiceRoute: typeof AetherinvoiceRoute
   AethersignRoute: typeof AethersignRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AetherinvoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   AetherinvoiceRoute: AetherinvoiceRoute,
   AethersignRoute: AethersignRoute,
 }
