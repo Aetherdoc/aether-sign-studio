@@ -38,14 +38,17 @@ function LandingPage() {
           <Link to="/about" className="transition hover:text-white">
             About
           </Link>
-          <a href="#philosophy" className="transition hover:text-white">
-            Philosophy
-          </a>
           <Link
             to="/aethersign"
             className="rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-4 py-2 text-[var(--gold)] transition hover:bg-[var(--gold)]/20"
           >
-            Launch AetherSign
+            AetherSign
+          </Link>
+          <Link
+            to="/aetherinvoice"
+            className="rounded-full border border-[var(--gold)]/40 bg-[var(--gold)]/10 px-4 py-2 text-[var(--gold)] transition hover:bg-[var(--gold)]/20"
+          >
+            AetherInvoice
           </Link>
         </nav>
       </header>
