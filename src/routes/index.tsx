@@ -35,6 +35,9 @@ function LandingPage() {
           <a href="#suite" className="transition hover:text-white">
             The Suite
           </a>
+          <Link to="/about" className="transition hover:text-white">
+            About
+          </Link>
           <a href="#philosophy" className="transition hover:text-white">
             Philosophy
           </a>
