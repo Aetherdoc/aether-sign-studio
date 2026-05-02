@@ -255,3 +255,43 @@ function SuiteCard({
   );
   return available && to ? <Link to={to}>{inner}</Link> : <div>{inner}</div>;
 }
+
+function Step({ number, title, body }: { number: string; title: string; body: string }) {
+  return (
+    <div className="glass-panel rounded-2xl p-8">
+      <div className="font-serif text-sm gold-text">{number}</div>
+      <h3 className="mt-4 font-serif text-xl">{title}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-white/60">{body}</p>
+    </div>
+  );
+}
+
+function Feature({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
+  return (
+    <div className="glass-panel rounded-2xl p-6">
+      <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-white/5 gold-text">
+        {icon}
+      </div>
+      <h3 className="font-serif text-lg">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-white/60">{body}</p>
+    </div>
+  );
+}
+
+function UseCase({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="glass-panel rounded-2xl p-6">
+      <h3 className="font-serif text-xl">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-white/60">{body}</p>
+    </div>
+  );
+}
+
+function Faq({ q, a }: { q: string; a: string }) {
+  return (
+    <div className="border-b border-white/10 pb-6">
+      <h3 className="font-serif text-lg text-white">{q}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-white/60">{a}</p>
+    </div>
+  );
+}
